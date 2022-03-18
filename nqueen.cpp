@@ -5,7 +5,7 @@
 using namespace std;
 
 typedef pair<int,int> position;
-position queens[N];
+//position queens[N];
 vector<position> postack;
 int board[N];
 int main()
