@@ -1,0 +1,38 @@
+while(board[0]<N)
+{
+    queen.first=i;
+    queen.second=j;
+    if(checkpos())
+    {
+        postack.push();
+        i++;
+        j=0;
+        if(postack.size()==N)
+        {
+            c++;
+            queen=postack.top();
+            postack.pop();
+            j=(queen.second)+1;
+        }
+    }
+    else
+    {
+        j++;
+        if(j>=N)
+        {
+            if(postack.empty())
+            {
+                cout<<c<<endl;
+                break;
+                //return 0;
+            }
+            else
+            queen=postack.top();
+            postack.pop();
+            i--;
+            j=(queen.second)+1;
+        }
+    }
+}
+return 0;
+}

@@ -1,21 +1,35 @@
 #include<iostream>
 #include <utility>
 #include <vector>
+#include <stack>
 #define N 4
 using namespace std;
 
 typedef pair<int,int> position;
 //position queens[N];
-int tos=0;
-bool emp=false;
-vector<position> postack;
-
+int init=0;
+//vector<position> postack;
+stack <position> postack;
 position queen;
 int board[N];
-bool checkpos(position q);
+bool checkpos(position q)
+{
+    int i,j,k;
+    j=q.second;
+    k=q.first;
+    if(k==0)
+    return true;
+    for(i=q.first-1;i>=0;i--)
+    {
+        if(board[i]==j || board[i]==j-(k-i) || board[i]==j+(k-i))
+        return false;
+    }
+    return true;
+
+}
 int main()
 {
-    int i=1,j=0,c=0;
+    int i=0,j=0,c=0;
     board[0]=0;
     while(board[0]<N)
     {
@@ -23,12 +37,49 @@ int main()
         queen.second=j;
         if(checkpos(queen))
         {
-            postack.push_back(queen);
+            postack.push(queen);
             board[i]=j;
-            tos++;
             i++;
-            if(i==N) c++;
             j=0;
+            if(postack.size()==N)
+            {
+                c++;
+                queen=(postack.top());
+                postack.pop();
+                j=(queen.second)+1;
+            }
+        }
+        else
+        {
+            j++;
+            if(j>=N)
+            {
+                queen=(postack.top());
+                postack.pop();
+                i--;
+                j=(queen.second)+1;
+            }
+        }
+    }
+    /*while(board[0]<N)
+    {
+        queen.first=i;
+        queen.second=j;
+        if(checkpos(queen))
+        {
+            postack.push(queen);
+            board[i]=j;
+            i++;
+            j=0;
+            if(postack.size())
+            {
+                c++;
+                /*queen=postack[tos];
+                postack.pop_back();
+                tos--;
+                i--;
+                j=(queen.second)+1;*/
+    /*        }
 
         }
         else
@@ -36,17 +87,18 @@ int main()
             j++;
             if(j>=N)
             {
-                queen=postack[tos];
+                if(postack.empty())
+                board[0]++;
+                else {
+                /*queen=postack[tos];
                 postack.pop_back();
                 tos--;
-                if(tos==0)
-                board[0]++;
                 i--;
-                j=(queen.second)+1;
-                
+                j=(queen.second)+1;*/
+    /*            }
             }
         }
-    }
+    }*/
     cout<<"Total config: "<<c<<endl;
     return 0;
 }
