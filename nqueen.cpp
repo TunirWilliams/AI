@@ -21,7 +21,7 @@ bool checkpos(position q)
     return true;
     for(i=q.first-1;i>=0;i--)
     {
-        if(board[i]==j || board[i]==j-(k-i) || board[i]==j+(k-i))
+        if(board[i]==j || board[i]==(j-(k-i)) || board[i]==(j+(k-i)))
         return false;
     }
     return true;
@@ -44,9 +44,9 @@ int main()
             if(postack.size()==N)
             {
                 c++;
+                j=(postack.top().second)+1;
                 queen=(postack.top());
                 postack.pop();
-                j=(queen.second)+1;
             }
         }
         else
@@ -54,10 +54,12 @@ int main()
             j++;
             if(j>=N)
             {
-                queen=(postack.top());
-                postack.pop();
-                i--;
-                j=(queen.second)+1;
+                if(!postack.empty())
+                {
+                    j=postack.top().second+1;
+                    postack.pop();
+                    i--;
+                }
             }
         }
     }
@@ -74,12 +76,12 @@ int main()
             if(postack.size())
             {
                 c++;
-                /*queen=postack[tos];
+                queen=postack[tos];
                 postack.pop_back();
                 tos--;
                 i--;
-                j=(queen.second)+1;*/
-    /*        }
+                j=(queen.second)+1;
+            }
 
         }
         else
@@ -90,12 +92,12 @@ int main()
                 if(postack.empty())
                 board[0]++;
                 else {
-                /*queen=postack[tos];
+                queen=postack[tos];
                 postack.pop_back();
                 tos--;
                 i--;
-                j=(queen.second)+1;*/
-    /*            }
+                j=(queen.second)+1;
+                }
             }
         }
     }*/
