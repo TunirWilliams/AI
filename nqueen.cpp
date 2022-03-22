@@ -2,7 +2,8 @@
 #include <utility>
 #include <vector>
 #include <stack>
-#define N 4
+#include <unistd.h>
+#define N 15
 using namespace std;
 
 typedef pair<int,int> position;
@@ -19,9 +20,9 @@ bool checkpos(position q)
     k=q.first;
     if(k==0)
     return true;
-    for(i=q.first-1;i>=0;i--)
+    for(i=q.first-1,k=1;i>=0;i--,k++)
     {
-        if(board[i]==j || board[i]==(j-(k-i)) || board[i]==(j+(k-i)))
+        if(board[i]==j || board[i]==(j-(k)) || board[i]==(j+(k)))
         return false;
     }
     return true;
@@ -29,22 +30,26 @@ bool checkpos(position q)
 }
 int main()
 {
-    int i=0,j=0,c=0;
-    board[0]=0;
-    while(board[0]<N)
+    int i=0,j=0,k=0,c=0;
+    while(true)
     {
         queen.first=i;
         queen.second=j;
-        if(checkpos(queen))
+        if(checkpos(queen) && j<N)
         {
+            
             postack.push(queen);
             board[i]=j;
+            for(k=0;k<=i;k++) cout<<board[k]<<" , ";
+            cout<<endl;
+            //usleep(1000000);
             i++;
             j=0;
-            if(postack.size()==N)
+            if(i>=N)
             {
                 c++;
                 j=(postack.top().second)+1;
+                i--;
                 queen=(postack.top());
                 postack.pop();
             }
@@ -57,9 +62,10 @@ int main()
                 if(!postack.empty())
                 {
                     j=postack.top().second+1;
+                    i=postack.top().first;
                     postack.pop();
-                    i--;
                 }
+                else break;
             }
         }
     }

@@ -1,38 +1,31 @@
-while(board[0]<N)
+#include<iostream>
+#include <utility>
+using namespace std;
+int board[4];
+bool checkpos(pair<int,int> q)
 {
-    queen.first=i;
-    queen.second=j;
-    if(checkpos())
+    int i,j,k;
+    j=q.second;
+    k=q.first;
+    if(k==0)
+    return true;
+    for(i=q.first-1,k=1;i>=0;i--,k++)
     {
-        postack.push();
-        i++;
-        j=0;
-        if(postack.size()==N)
-        {
-            c++;
-            queen=postack.top();
-            postack.pop();
-            j=(queen.second)+1;
-        }
+        if(board[i]==j || board[i]==(j-(k)) || board[i]==(j+(k)))
+        return false;
     }
-    else
-    {
-        j++;
-        if(j>=N)
-        {
-            if(postack.empty())
-            {
-                cout<<c<<endl;
-                break;
-                //return 0;
-            }
-            else
-            queen=postack.top();
-            postack.pop();
-            i--;
-            j=(queen.second)+1;
-        }
-    }
+    return true;
+
 }
-return 0;
+int main()
+{
+    pair<int,int> queen;
+    board[0]=1;
+    board[1]=3;
+    board[2]=0;
+    queen.first=3;
+    queen.second=2;
+    cout<<checkpos(queen)<<endl;
+
+    return 0;
 }
