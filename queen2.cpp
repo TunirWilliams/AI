@@ -1,8 +1,20 @@
 #include<iostream>
 #include <utility>
+#include <vector>
+#include <queue>
+#include <unistd.h>
+#define N 4
 using namespace std;
-int board[4];
-bool checkpos(pair<int,int> q)
+typedef pair<int,int> position;
+int init=0;
+position queen;
+struct bd
+{
+    int board[N];
+    int sel=0;
+};
+queue <struct bd> posque;
+bool checkpos(position q)
 {
     int i,j,k;
     j=q.second;
@@ -19,13 +31,31 @@ bool checkpos(pair<int,int> q)
 }
 int main()
 {
-    pair<int,int> queen;
-    board[0]=1;
-    board[1]=3;
-    board[2]=0;
-    queen.first=3;
-    queen.second=2;
-    cout<<checkpos(queen)<<endl;
+    int i=0,j=0,k=0,c=0;
+    while(true)
+    {
+        queen.first=i;
+        queen.second=j;
+        if(checkpos(queen) && j<N && i<N)
+        {
+            if(queen.first==N-1)
+            c++;
+            else
+            posque.push(queen);
+            j++;
+        }
+        else if(j>=N)
+        {
+            queen=posque.front();
+            posque.pop();
+            board[queen.first]=queen.second;
+            i=queen.first+1;
+            j=0;
+        }
+        if(posque.empty())
+        break;
 
+    }
+    cout<<"Total config: "<<c<<endl;
     return 0;
 }
