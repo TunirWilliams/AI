@@ -3,7 +3,7 @@
 #include <vector>
 #include <queue>
 #include <unistd.h>
-#define N 4
+#define N 15
 using namespace std;
 typedef pair<int,int> position;
 int init=0;
@@ -14,7 +14,7 @@ struct bd
     int sel=0;
 };
 queue <struct bd> posque;
-bool checkpos(position q)
+bool checkpos(position q,int board[N])
 {
     int i,j,k;
     j=q.second;
@@ -29,9 +29,44 @@ bool checkpos(position q)
     return true;
 
 }
+int addon(int i)
+{
+    int j,c=0;
+    struct bd *a;
+    if(!posque.empty())
+    {
+        a=&(posque.front());
+        posque.pop();
+    }
+    else
+    {
+        a=(struct bd*)malloc(sizeof(struct bd*));
+
+    }
+    position q;
+    q.first=i;
+    for(j=0;j<N;j++)
+    {
+        q.second=j;
+        if(checkpos(q,a->board))
+        {
+            a->board[i]=j;
+            posque.push(*a);
+            if(i==(N-1)) c++;
+        }
+    }
+    return c;
+}
+
 int main()
 {
-    int i=0,j=0,k=0,c=0;
+    int c=0,i;
+    for(i=0;i<N;i++)
+    {
+        c=addon(i);
+    }
+    /*int i=0,j=0,k=0,c=0;
+    struct bd x;
     while(true)
     {
         queen.first=i;
@@ -55,7 +90,7 @@ int main()
         if(posque.empty())
         break;
 
-    }
+    }*/
     cout<<"Total config: "<<c<<endl;
     return 0;
 }
