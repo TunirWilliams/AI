@@ -3,18 +3,16 @@
 #include <vector>
 #include <queue>
 #include <unistd.h>
-#define N 15
+#define N 8
 using namespace std;
 typedef pair<int,int> position;
-int init=0;
 position queen;
 struct bd
 {
     int board[N];
-    int sel=0;
 };
 queue <struct bd> posque;
-bool checkpos(position q,int board[N])
+bool checkpos(position q,int brd[N])
 {
     int i,j,k;
     j=q.second;
@@ -23,7 +21,7 @@ bool checkpos(position q,int board[N])
     return true;
     for(i=q.first-1,k=1;i>=0;i--,k++)
     {
-        if(board[i]==j || board[i]==(j-(k)) || board[i]==(j+(k)))
+        if(brd[i]==j || brd[i]==(j-(k)) || brd[i]==(j+(k)))
         return false;
     }
     return true;
@@ -32,26 +30,29 @@ bool checkpos(position q,int board[N])
 int addon(int i)
 {
     int j,c=0;
-    struct bd *a;
+    struct bd a;
+    struct bd *b;
     if(!posque.empty())
     {
-        a=&(posque.front());
+        a=(posque.front());
         posque.pop();
     }
-    else
+    /*else
     {
         a=(struct bd*)malloc(sizeof(struct bd*));
 
-    }
+    }*/
     position q;
     q.first=i;
     for(j=0;j<N;j++)
     {
         q.second=j;
-        if(checkpos(q,a->board))
+        if(checkpos(q,a.board))
         {
-            a->board[i]=j;
-            posque.push(*a);
+            b=(struct bd*)malloc(sizeof(struct bd));
+            copy(begin(a.board),end(a.board),b->board);
+            b->board[i]=j;
+            posque.push(*b);
             if(i==(N-1)) c++;
         }
     }
@@ -61,36 +62,16 @@ int addon(int i)
 int main()
 {
     int c=0,i;
+    struct bd a;
     for(i=0;i<N;i++)
+    {
+        a.board[0]=i;
+        posque.push(a);
+    }
+    for(i=1;i<N;i++)
     {
         c=addon(i);
     }
-    /*int i=0,j=0,k=0,c=0;
-    struct bd x;
-    while(true)
-    {
-        queen.first=i;
-        queen.second=j;
-        if(checkpos(queen) && j<N && i<N)
-        {
-            if(queen.first==N-1)
-            c++;
-            else
-            posque.push(queen);
-            j++;
-        }
-        else if(j>=N)
-        {
-            queen=posque.front();
-            posque.pop();
-            board[queen.first]=queen.second;
-            i=queen.first+1;
-            j=0;
-        }
-        if(posque.empty())
-        break;
-
-    }*/
     cout<<"Total config: "<<c<<endl;
     return 0;
 }
