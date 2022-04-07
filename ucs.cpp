@@ -8,7 +8,7 @@ struct node
     int label;
     int cost;
 };
-int start=0,goal=6;
+int start=0,goal=4;
 vector <node> que;
 vector<node> adjlist[7];
 int visited[7];
