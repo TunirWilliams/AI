@@ -3,13 +3,13 @@
 #include <vector>
 #include <stack>
 #include <unistd.h>
-#define N 15
+//#define N 15
 using namespace std;
 typedef pair<int,int> position;
-int init=0;
 stack <position> postack;
 position queen;
-int board[N];
+int N;
+int *board;
 bool checkpos(position q)
 {
     int i,j,k;
@@ -28,6 +28,9 @@ bool checkpos(position q)
 int main()
 {
     int i=0,j=0,k=0,c=0;
+    cout<<"Enter N: ";
+    cin>>N;
+    board=(int*)malloc(N*sizeof(int));
     while(true)
     {
         queen.first=i;
