@@ -31,28 +31,6 @@ void inputarray(board *a)
         
     }
 }
-void sort()
-{
-    int i,j,min;
-    board *tmp;
-    for(i=0;i<boardlist.size();i++)
-    {
-        min=i;
-        for(j=i+1;j<boardlist.size();j++)
-        {
-            if((boardlist[i]->c+boardlist[i]->h)>boardlist[j]->c+boardlist[j]->h)
-            {
-                min=j;
-            }
-        }
-        if(min!=i)
-        {
-            tmp=boardlist[i];
-            boardlist[i]=boardlist[min];
-            boardlist[min]=tmp;
-        }
-    }
-}
 void displayarray(board *a)
 {
     int i,j;
