@@ -1,3 +1,4 @@
+//in the empty slot enter 0
 #include <iostream>
 #include <vector>
 #include <algorithm>

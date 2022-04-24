@@ -1,3 +1,4 @@
+//in the empty slot enter 0
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -9,6 +10,11 @@ struct board
     int board[N][N];
     int i,j,h=0,c=0;
 };
+struct element
+{
+    int i=0,j=0;
+};
+element list[9];
 int goal[N][N];
 vector <board*> boardlist;
 void inputarray(board *a)
@@ -66,16 +72,12 @@ void displayarray(board *a)
 }
 int calculateh(board *a)
 {
-    int i,j,k=1,h=0;
+    int i,j,h=0;
     for(i=0;i<N;i++)
     {
         for(j=0;j<N;j++)
         {
-            if(a->board[i][j]!=goal[i][j])
-            {
-                h++;
-            }
-            k++;
+            h=h+(abs(((list[a->board[i][j]].i)-i))+abs(((list[a->board[i][j]].j)-j)));
         }
     }
     return h;
@@ -164,7 +166,10 @@ int main()
     {
         for(j=0;j<N;j++)
         {
-            goal[i][j]=k%9;
+            k=k%9;
+            goal[i][j]=k;
+            list[k].i=i;
+            list[k].j=j;
             k++;
         }
     }
@@ -176,7 +181,6 @@ int main()
         init=boardlist[0];
         boardlist.erase(boardlist.begin());
         displayarray(init);
-        cout<<endl;
         cout<<endl;
         if(init->h==0)
         {
