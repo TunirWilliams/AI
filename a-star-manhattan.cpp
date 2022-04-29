@@ -159,7 +159,7 @@ int main()
         init=boardlist[0];
         boardlist.erase(boardlist.begin());
         displayarray(init);
-        cout<<endl;
+        cout<<endl<<boardlist.size()<<endl;
         if(init->h==0)
         {
             break;
